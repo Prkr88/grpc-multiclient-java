@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package bank;
+
+//option java_package = "com.proto.bank";
+//option java_multiple_files = true;
+
+message Account {
+  int32 balance = 1;
+  repeated int32 transactions = 2 [packed=true];
+}
+
+message AccountRequest {
+  Account account = 1;
+}
+
+message AccountResponse {
+  string result = 1;
+}
+
+service AccountService {
+  // Unary
+  rpc Account(AccountRequest) returns (AccountResponse) {};
+}
