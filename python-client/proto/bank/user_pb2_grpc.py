@@ -14,19 +14,30 @@ class UserServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.User = channel.unary_unary(
-                '/bank.UserService/User',
+        self.UserDetails = channel.unary_unary(
+                '/bank.UserService/UserDetails',
                 request_serializer=proto_dot_bank_dot_user__pb2.UserRequest.SerializeToString,
                 response_deserializer=proto_dot_bank_dot_user__pb2.UserResponse.FromString,
+                )
+        self.Withdrawal = channel.unary_unary(
+                '/bank.UserService/Withdrawal',
+                request_serializer=proto_dot_bank_dot_user__pb2.WithdrawalRequest.SerializeToString,
+                response_deserializer=proto_dot_bank_dot_user__pb2.WithdrawalResponse.FromString,
                 )
 
 
 class UserServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def User(self, request, context):
-        """Unary
+    def UserDetails(self, request, context):
+        """Unary communication
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Withdrawal(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -34,10 +45,15 @@ class UserServiceServicer(object):
 
 def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'User': grpc.unary_unary_rpc_method_handler(
-                    servicer.User,
+            'UserDetails': grpc.unary_unary_rpc_method_handler(
+                    servicer.UserDetails,
                     request_deserializer=proto_dot_bank_dot_user__pb2.UserRequest.FromString,
                     response_serializer=proto_dot_bank_dot_user__pb2.UserResponse.SerializeToString,
+            ),
+            'Withdrawal': grpc.unary_unary_rpc_method_handler(
+                    servicer.Withdrawal,
+                    request_deserializer=proto_dot_bank_dot_user__pb2.WithdrawalRequest.FromString,
+                    response_serializer=proto_dot_bank_dot_user__pb2.WithdrawalResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -50,7 +66,7 @@ class UserService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def User(request,
+    def UserDetails(request,
             target,
             options=(),
             channel_credentials=None,
@@ -60,8 +76,25 @@ class UserService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/bank.UserService/User',
+        return grpc.experimental.unary_unary(request, target, '/bank.UserService/UserDetails',
             proto_dot_bank_dot_user__pb2.UserRequest.SerializeToString,
             proto_dot_bank_dot_user__pb2.UserResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Withdrawal(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/bank.UserService/Withdrawal',
+            proto_dot_bank_dot_user__pb2.WithdrawalRequest.SerializeToString,
+            proto_dot_bank_dot_user__pb2.WithdrawalResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

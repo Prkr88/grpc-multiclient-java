@@ -1,17 +1,20 @@
 syntax = "proto3";
-
 import "proto/bank/account.proto";
 
 package bank;
 
-//option java_package = "com.proto.bank";
-//option java_multiple_files = true;
+option java_package = "com.proto.bank";
+option java_multiple_files = true;
 
 message User {
   string first_name = 1;
   string last_name = 2;
   int32 id = 3;
   Account account = 4;
+}
+
+message Withdrawal{
+  int32  request_amount = 1;
 }
 
 message UserRequest {
@@ -22,7 +25,18 @@ message UserResponse {
   string result = 1;
 }
 
+message WithdrawalRequest {
+  User user = 1;
+  Withdrawal withdrawal = 2;
+}
+
+message WithdrawalResponse {
+  string result = 1;
+}
+
 service UserService {
-  // Unary
-  rpc User(UserRequest) returns (UserResponse) {};
+  // Unary communication
+  rpc UserDetails(UserRequest) returns (UserResponse) {};
+
+  rpc Withdrawal(WithdrawalRequest) returns (WithdrawalResponse) {};
 }

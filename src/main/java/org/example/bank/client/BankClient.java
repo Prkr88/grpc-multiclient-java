@@ -4,13 +4,12 @@ import com.proto.bank.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
-import javax.net.ssl.SSLException;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class BankClient {
 
-    public static void main(String[] args) throws SSLException {
+    public static void main(String[] args) {
         System.out.println("Hello I'm a gRPC client");
 
         BankClient main = new BankClient();
@@ -19,9 +18,8 @@ public class BankClient {
 
     private void run() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
-                .usePlaintext()
+                .usePlaintext() // This is needed to run on localhost (no ssl)
                 .build();
-
 
         doUnaryCall(channel);
     }

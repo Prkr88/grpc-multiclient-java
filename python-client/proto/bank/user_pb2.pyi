@@ -1,4 +1,3 @@
-from google.protobuf import any_pb2 as _any_pb2
 from proto.bank import account_pb2 as _account_pb2
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -25,6 +24,26 @@ class UserRequest(_message.Message):
     def __init__(self, user: _Optional[_Union[User, _Mapping]] = ...) -> None: ...
 
 class UserResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: str
+    def __init__(self, result: _Optional[str] = ...) -> None: ...
+
+class Withdrawal(_message.Message):
+    __slots__ = ["request_amount"]
+    REQUEST_AMOUNT_FIELD_NUMBER: _ClassVar[int]
+    request_amount: int
+    def __init__(self, request_amount: _Optional[int] = ...) -> None: ...
+
+class WithdrawalRequest(_message.Message):
+    __slots__ = ["user", "withdrawal"]
+    USER_FIELD_NUMBER: _ClassVar[int]
+    WITHDRAWAL_FIELD_NUMBER: _ClassVar[int]
+    user: User
+    withdrawal: Withdrawal
+    def __init__(self, user: _Optional[_Union[User, _Mapping]] = ..., withdrawal: _Optional[_Union[Withdrawal, _Mapping]] = ...) -> None: ...
+
+class WithdrawalResponse(_message.Message):
     __slots__ = ["result"]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: str
